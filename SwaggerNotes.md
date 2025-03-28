@@ -7,7 +7,7 @@
    in addition to the installed packages we install
 
 ```
-pip install flask flask-swagger-ui flask-restx
+pip install flask flask-sqlalchemy flask-migrate flask-swagger-ui flask-restx
 ```
 
 2. inside `app.py` we import
@@ -38,64 +38,4 @@ app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 
 # API Namespace
 ns = api.namespace('api', description='Sample operations')
-```
-
-4. we create the Swagger JSON file
-
-```json
-{
-  "swagger": "2.0",
-  "info": {
-    "title": "Flask Swagger UI Example",
-    "description": "This is a simple API to demonstrate Swagger UI integration with Flask",
-    "version": "1.0.0"
-  },
-  "paths": {
-    "/api/greet": {
-      "get": {
-        "summary": "Greet endpoint",
-        "responses": {
-          "200": {
-            "description": "A greeting message",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/square/{number}": {
-      "get": {
-        "summary": "Square a number",
-        "parameters": [
-          {
-            "name": "number",
-            "in": "path",
-            "type": "integer",
-            "required": true,
-            "description": "The number to square"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "The squared result",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "integer"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
 ```
