@@ -2,38 +2,42 @@
 
 ## Installing the required packages
 
-1. first we need to install swagger packages for flask there are two options I will go with the manual configuration for swagger
+1. first we need to install swagger packages for flask
 
    in addition to the installed packages we install
 
 ```
-pip install flask-swagger-ui
+pip install flask flask-swagger-ui flask-restx
 ```
 
-2. inside `app.py` we import `jsonify` and `get_swaggerui_blueprint`
+2. inside `app.py` we import
 
 ```python
-from flask import Flask, jsonify
+from flask import Flask
+from flask_restx import Api, Resource
 from flask_swagger_ui import get_swaggerui_blueprint
 ```
 
 3. configure the swagger ui in `app.py`
 
 ```python
-SWAGGER_URL = '/swagger'  # The URL for Swagger UI
-API_URL = '/static/swagger.json'  # The URL of your Swagger JSON file
+# Setup Flask-RESTX API
+api = Api(app, version='1.0', title='Simple API',
+          description='A simple API with OpenAPI 3.0 documentation')
 
-# Set up Swagger UI blueprint
+# Create a Swagger UI blueprint
+SWAGGER_URL = '/swagger'  # Swagger UI URL endpoint
+API_URL = '/static/swagger.json'  # Swagger JSON URL endpoint
+
 swagger_ui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
-    config={
-        'app_name': "Flask Swagger UI Example"
-    }
+    config={'app_name': "Flask Swagger UI Example"}
 )
-
-# Register the Swagger UI blueprint
 app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
+
+# API Namespace
+ns = api.namespace('api', description='Sample operations')
 ```
 
 4. we create the Swagger JSON file
