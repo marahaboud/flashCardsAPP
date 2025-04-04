@@ -39,3 +39,30 @@ app.register_blueprint(swagger_ui_blueprint, url_prefix=SWAGGER_URL)
 # API Namespace
 ns = api.namespace('api', description='Sample operations')
 ```
+
+## UUID in database model
+
+first we install the required package
+
+```
+pip install sqlalchemy-utils
+```
+
+in the `models.py` we modify the model to include the primary key as uuid
+
+```python
+import uuid
+from sqlalchemy_utils import UUIDType
+...
+
+class Card(db.Model):
+    ...
+    card_uid = db.Comlumn(UUIDType(binary=False), primary_key=True, default=uuid.uuid4)
+    ...
+
+    def to_json(self):
+        return {
+            cardId: str(self.card_uid),
+            ...
+        }
+```

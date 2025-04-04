@@ -30,9 +30,10 @@ def create_app():
         config = {'app_name': 'Flask Swagger UI simple practice'}
     )
     # api.namespace('api', description='Sample operation')
-    from api.routes import api_namespace
+    from .api.routes import api_namespace
     api.add_namespace(api_namespace, path='/api')
     
+    from .models import Card
     migrate = Migrate(app, db)
     
     return app
