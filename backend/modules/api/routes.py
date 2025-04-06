@@ -55,7 +55,9 @@ class CardResource(Resource):
             if card:
                 db.session.delete(card)
                 db.session.commit()
-                return jsonify({'message': 'Card Deleted Successfully'}), 201
-        except:
-            pass
+                return jsonify({'message': 'Card Deleted Successfully'}), 204
+            else:
+                return jsonify({'message': 'The card does not exist'}), 404
+        except ValueError:
+            return jsonify({'message': 'Invalid deletion request'}), 400
     
