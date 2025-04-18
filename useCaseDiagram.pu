@@ -1,0 +1,54 @@
+@startuml
+' allowmixing
+' skinparam actorStyle awesome
+skinparam actorStyle hollow
+' default: top to bottom direction
+left to right direction
+actor User <<Human>>
+:Main Database: as PSql <<Application>>
+package "Admin Users" {
+    actor Admin
+}
+User <|-- Admin
+package "User Cases" {
+    usecase "Create Flashcards Deck" as CreateDeck <<action>>
+    usecase "Add Cards to Deck" as AddCard <<action>>
+    usecase "Review/Study Deck" as Study <<review>>
+    usecase "Track Progress" as Track <<review>>
+}
+
+package "Admin Cases"{
+    usecase "Add new users" as AddUser
+}
+
+' #color;line.[bold|dashed|dotted];text:color
+User -up-> CreateDeck #green;line.bold;text:green : green bold
+User -up-> AddCard
+User -up-> Study
+User -up-> Track #red;line.dashed;text:red : red dashed
+
+Admin --> AddUser : the admin can add users
+
+' Notes
+note right of Admin: this is an admin user.
+note right of AddUser
+    This is a nultiline b
+    note hahahhaaa
+    so cooooool
+endnote
+newpage
+note "User activities in the system\n what the user can do here" as UserNotes
+CreateDeck .up. UserNotes
+AddCard .up. UserNotes
+Study .up. UserNotes
+Track .up. UserNotes
+
+usecase/ "This is \nBuisness Use Case" as BUC
+actor/ "This is Business Actor" as BUser
+
+' json JSON {
+'     "username" : "Bob",
+'     "actions" : ['Add', 'Delete']
+' }
+
+@enduml
